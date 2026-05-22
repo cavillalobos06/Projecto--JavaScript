@@ -144,13 +144,13 @@ src/
 npm install
 ```
 
-2. Inicia la app en desarrollo:
+1. Inicia la app en desarrollo:
 
 ```bash
 npm run dev
 ```
 
-3. En paralelo, cuando se agregue el backend fake, inicia `json-server` con el archivo de datos definido para el proyecto.
+1. En paralelo, cuando se agregue el backend fake, inicia `json-server` con el archivo de datos definido para el proyecto.
 
 ## Backend fake
 
