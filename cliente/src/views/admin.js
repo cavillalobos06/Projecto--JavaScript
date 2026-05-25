@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel administrativo | TaskFlowSPA</title>
-  </head>
-  <body class="min-h-screen bg-sky-50 text-slate-800">
-    <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
+function renderAdmin(){
+    return `
+<header class="border-b border-blue-100 bg-white/90 backdrop-blur">
       <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
         <nav class="hidden gap-3 md:flex">
@@ -16,9 +10,9 @@
           <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/src/views/admin.html">Admin</a>
         </nav>
       </div>
-    </header>
+</header>
 
-    <main class="mx-auto max-w-7xl px-6 py-10">
+<main class="mx-auto max-w-7xl px-6 py-10">
       <section class="rounded-[2rem] bg-blue-600 px-8 py-10 text-white shadow-xl shadow-blue-100">
         <p class="text-sm font-semibold uppercase tracking-[0.3em] text-blue-100">Rol administrador</p>
         <h1 class="mt-3 text-4xl font-black tracking-tight">Panel administrativo</h1>
@@ -68,8 +62,5 @@
           </div>
         </article>
       </section>
-    </main>
-
-    <script type="module" src="../main.js"></script>
-  </body>
-</html>
+</main>`
+}
