@@ -1,4 +1,4 @@
-function renderNotFound(){
+export function renderNotFound(){
     return `
 <main class="flex min-h-screen items-center justify-center px-6 py-10">
   <section

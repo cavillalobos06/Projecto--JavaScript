@@ -1,4 +1,4 @@
-function renderLogin(){
+export function renderLogin(){
     return `
 <main class="grid min-h-screen lg:grid-cols-[1fr_0.95fr]">
   <section class="flex items-center justify-center px-6 py-10">
@@ -46,4 +46,14 @@ function renderLogin(){
     </div>
   </section>
 </main>`
+}
+
+
+export function setupLogin(){
+  const form = document.querySelector('form');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+  });
 }
