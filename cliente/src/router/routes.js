@@ -1,12 +1,13 @@
 import { renderLogin, setupLogin } from "../views/auth/login";
+import { renderNotFound } from "../views/auth/notFound";
 import { renderRegister, setupRegister } from "../views/auth/register";
 import { renderHome } from "../views/home";
-import { renderTasks } from "../views/tasks/tasks";
-import { renderAdmin } from "../views/users/admin";
-import { renderDashboard } from "../views/users/dashboard";
-import { renderProfile } from "../views/users/profile";
+import { renderTasks, setupTasks } from "../views/tasks/tasks";
+import { renderAdmin, setupAdmin } from "../views/users/admin";
+import { renderDashboard, setupDashboard } from "../views/users/dashboard";
+import { renderProfile, setupProfile } from "../views/users/profile";
 
-const routes = {
+export const routes = {
     "/":{
         render: renderHome
     },
@@ -42,3 +43,6 @@ const routes = {
         setup: setupAdmin
     }
 }
+
+
+export const notFoundView = renderNotFound 

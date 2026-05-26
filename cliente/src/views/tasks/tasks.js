@@ -2,16 +2,16 @@ export function renderTasks(){
     return `
 <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-    <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
+    <a class="text-xl font-black text-blue-900" href="/">TaskFlowSPA</a>
     <nav class="hidden gap-3 md:flex">
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/dashboard.html">Dashboard</a>
+        href="/dashboard">Dashboard</a>
       <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
-        href="/src/views/tasks.html">Tareas</a>
+        href="/tasks">Tareas</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/profile.html">Perfil</a>
+        href="/profile">Perfil</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/admin.html">Admin</a>
+        href="/admin">Admin</a>
     </nav>
   </div>
 </header>
@@ -26,7 +26,7 @@ export function renderTasks(){
         autenticado.</p>
     </div>
     <a class="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
-      href="/src/views/task-form.html">
+      href="/task-form">
       Crear tarea
     </a>
   </section>
@@ -42,9 +42,9 @@ export function renderTasks(){
         </div>
         <div class="flex gap-3">
           <a class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
-            href="/src/views/task-form.html">Editar</a>
+            href="/task-form">Editar</a>
           <a class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
-            href="/src/views/tasks.html">Eliminar</a>
+            href="/tasks">Eliminar</a>
         </div>
       </div>
     </article>
@@ -59,12 +59,16 @@ export function renderTasks(){
         </div>
         <div class="flex gap-3">
           <a class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
-            href="/src/views/task-form.html">Editar</a>
+            href="/task-form">Editar</a>
           <a class="rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
-            href="/src/views/tasks.html">Eliminar</a>
+            href="/tasks">Eliminar</a>
         </div>
       </div>
     </article>
   </section>
 </main>`
+}
+
+export function setupTasks(){
+  return;
 }

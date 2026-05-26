@@ -9,9 +9,9 @@ export function renderNotFound(){
       proyecto.</p>
     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
       <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
-        href="/src/views/home.html">Ir a home</a>
+        href="/">Ir a home</a>
       <a class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
-        href="/src/views/login.html">Volver al login</a>
+        href="/login">Volver al login</a>
     </div>
   </section>
 </main>`

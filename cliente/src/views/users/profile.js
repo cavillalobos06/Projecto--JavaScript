@@ -2,14 +2,14 @@ export function renderProfile(){
     return `
 <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
+    <a class="text-xl font-black text-blue-900" href="/home">TaskFlowSPA</a>
     <nav class="hidden gap-3 md:flex">
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/dashboard.html">Dashboard</a>
+        href="/dashboard">Dashboard</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/tasks.html">Tareas</a>
+        href="/tasks">Tareas</a>
       <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
-        href="/src/views/profile.html">Perfil</a>
+        href="/profile">Perfil</a>
     </nav>
   </div>
 </header>
@@ -42,12 +42,16 @@ export function renderProfile(){
         </div>
         <div class="flex flex-col gap-3 pt-2 sm:flex-row">
           <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
-            href="/src/views/profile.html">Guardar cambios</a>
+            href="/profile">Guardar cambios</a>
           <a class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
-            href="/src/views/login.html">Eliminar mi cuenta</a>
+            href="/login">Eliminar mi cuenta</a>
         </div>
       </form>
     </section>
   </section>
 </main>`
+}
+
+export function setupProfile(){
+  return;
 }

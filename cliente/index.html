@@ -43,15 +43,16 @@
   </head>
 
   <body>
+    <div id="app">
     <main class="flex min-h-screen items-center justify-center bg-gradient-to-b from-sky-50 via-white to-blue-100 px-6">
-      <a
+      <a id="goHome"
         class="inline-flex items-center rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-500"
-        href="/src/views/home.html"
+        href="/login" data-route="login"
       >
         Ir a Home
       </a>
     </main>
-
+    </div>
     <script type="module" src="./src/main.js"></script>
   </body>
 </html>

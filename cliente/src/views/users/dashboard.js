@@ -2,18 +2,18 @@ export function renderDashboard(){
     return `
 <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-    <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
+    <a class="text-xl font-black text-blue-900" href="/home">TaskFlowSPA</a>
     <nav class="hidden gap-3 md:flex">
       <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
-        href="/src/views/dashboard.html">Dashboard</a>
+        href="/dashboard">Dashboard</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/tasks.html">Tareas</a>
+        href="/tasks">Tareas</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/profile.html">Perfil</a>
+        href="/profile">Perfil</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
-        href="/src/views/admin.html">Admin</a>
+        href="/admin">Admin</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
-        href="/src/views/login.html">Logout</a>
+        href="/login">Logout</a>
     </nav>
   </div>
 </header>
@@ -45,14 +45,14 @@ export function renderDashboard(){
     <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-bold text-slate-900">Accesos rapidos</h2>
-        <a class="text-sm font-semibold text-blue-700 hover:text-blue-600" href="/src/views/tasks.html">Ver tareas</a>
+        <a class="text-sm font-semibold text-blue-700 hover:text-blue-600" href="/tasks">Ver tareas</a>
       </div>
       <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <a class="rounded-3xl bg-blue-50 p-5 hover:bg-blue-100" href="/src/views/task-form.html">
+        <a class="rounded-3xl bg-blue-50 p-5 hover:bg-blue-100" href="/task-form">
           <p class="text-sm font-semibold text-blue-600">Crear</p>
           <h3 class="mt-2 text-lg font-bold text-slate-900">Nueva tarea</h3>
         </a>
-        <a class="rounded-3xl bg-blue-50 p-5 hover:bg-blue-100" href="/src/views/profile.html">
+        <a class="rounded-3xl bg-blue-50 p-5 hover:bg-blue-100" href="/profile">
           <p class="text-sm font-semibold text-blue-600">Cuenta</p>
           <h3 class="mt-2 text-lg font-bold text-slate-900">Editar perfil</h3>
         </a>
@@ -60,4 +60,9 @@ export function renderDashboard(){
     </article>
   </section>
 </main>`
+}
+
+
+export function setupDashboard(){
+  return;
 }
