@@ -1,4 +1,11 @@
 {
-    "users":[],
-    "roles":[]
+  "users": [],
+  "roles": [
+    {
+      "name": "USER"
+    },
+    {
+      "name": "ADMIN"
+    }
+  ]
 }

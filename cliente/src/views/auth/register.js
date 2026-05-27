@@ -1,4 +1,6 @@
+import { renderRouter } from "../../router/router";
 import { createUser } from "../../services/users.service";
+import Swal from 'sweetalert2'
 
 export function renderRegister() {
   return `
@@ -31,27 +33,27 @@ export function renderRegister() {
         <div class="grid gap-5 md:grid-cols-2">
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-700" for="register-name">Nombre</label>
-            <input id="register-name" type="text" placeholder="Ana"
-              class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+            <input id="register-name" type="text" required placeholder="Ana"
+              class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"/>
           </div>
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-700" for="register-lastname">Apellido</label>
-            <input id="register-lastname" type="text" placeholder="Torres"
-              class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+            <input id="register-lastname" type="text" required placeholder="Torres"
+              class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"/>
           </div>
         </div>
 
         <div>
           <label class="mb-2 block text-sm font-medium text-slate-700" for="register-email">Correo</label>
-          <input id="register-email" type="email" placeholder="usuario@taskflow.com"
-            class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+          <input id="register-email" type="email" required placeholder="usuario@taskflow.com"
+            class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"/>
         </div>
 
         <div class="grid gap-5 md:grid-cols-2">
           <div>
-            <label class="mb-2 block text-sm font-medium text-slate-700" for="register-password">Contrasena</label>
-            <input id="register-password" type="password" placeholder="Crea una contrasena"
-              class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
+            <label class="mb-2 block text-sm font-medium text-slate-700" for="register-password">Contraseña</label>
+            <input id="register-password" type="password" required placeholder="Crea una contraseña"
+              class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none"/>
           </div>
           <div>
             <label class="mb-2 block text-sm font-medium text-slate-700" for="register-role">Rol</label>
@@ -63,7 +65,7 @@ export function renderRegister() {
           </div>
         </div>
 
-        <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
+        <a id= "create" class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
           href="/login">
           Registrarme
         </a>
@@ -74,27 +76,46 @@ export function renderRegister() {
 }
 
 export function setupRegister() {
-  const form = document.getElementById('register-form');
-  const name = document.getElementById('register-name');
-  const lastname = document.getElementById('register-lastname');
-  const email = document.getElementById('register-email');
-  const password = document.getElementById('register-password');
   const role = document.getElementById('register-role');
+  const createBtn = document.getElementById("create");
 
-  form.addEventListener("submit", async (event) => {
+  createBtn.addEventListener("click", async (event) => {
     event.preventDefault();
+    event.stopPropagation();
+
+    const name = document.getElementById('register-name').value.trim();
+    const lastname = document.getElementById('register-lastname').value.trim();
+    const email = document.getElementById('register-email').value.trim();
+    const password = document.getElementById('register-password').value.trim();
+
+
+    if (!name || !lastname || !email || !password) {
+      Swal.fire({
+        icon: "error",
+        text: "Todos los campos son obligatorios",
+        footer: "Por favor llene los campos"
+      });
+      return;
+    }
 
     const newUser = {
-      name: name.value,
-      lastname: lastname.value,
-      email: email.value,
-      password: password.value,
+      name: name,
+      lastname: lastname,
+      email: email,
+      password: password,
       roles: [role.value]
     }
     const response = await createUser(newUser);
 
     if (response) {
-      alert("Usuario creado exitosamente");
+      Swal.fire({
+        title: "Usuario creado exitosamente",
+        icon: "success",
+        draggable: true
+      });
+      window.history.pushState({}, "", "/login")
+      renderRouter();
     }
+
   })
 }

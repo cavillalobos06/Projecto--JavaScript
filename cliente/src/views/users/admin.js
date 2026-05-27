@@ -43,7 +43,7 @@ export function renderAdmin(){
                 </div>
                 <div class="flex gap-2">
                   <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">USER</span>
-                  <a class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white" href="/src/views/admin.html">Editar rol</a>
+                  <a class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white" href="/admin">Editar rol</a>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@ export function renderAdmin(){
                 </div>
                 <div class="flex gap-2">
                   <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">ADMIN</span>
-                  <a class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white" href="/src/views/admin.html">Editar rol</a>
+                  <a class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white" href="/admin">Editar rol</a>
                 </div>
               </div>
             </div>

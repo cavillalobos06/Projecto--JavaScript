@@ -2,6 +2,7 @@ import { renderLogin, setupLogin } from "../views/auth/login";
 import { renderNotFound } from "../views/auth/notFound";
 import { renderRegister, setupRegister } from "../views/auth/register";
 import { renderHome } from "../views/home";
+import { renderTaskForm, setupTaskForm } from "../views/tasks/taskForm";
 import { renderTasks, setupTasks } from "../views/tasks/tasks";
 import { renderAdmin, setupAdmin } from "../views/users/admin";
 import { renderDashboard, setupDashboard } from "../views/users/dashboard";
@@ -30,6 +31,11 @@ export const routes = {
         render: renderTasks,
         requiresAuth: true,
         setup: setupTasks
+    },
+    "/task-form":{
+        render: renderTaskForm,
+        requiresAuth: true,
+        setup: setupTaskForm
     },
      "/profile":{
         render: renderProfile,

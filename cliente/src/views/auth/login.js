@@ -22,8 +22,8 @@ export function renderLogin(){
             class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contrasena</label>
-          <input id="password" type="password" placeholder="Ingresa tu contrasena"
+          <label class="mb-2 block text-sm font-medium text-slate-700" for="password">Contraseña</label>
+          <input id="password" type="password" placeholder="Ingresa tu contraseña"
             class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
         </div>
         <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"

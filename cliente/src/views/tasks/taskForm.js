@@ -60,3 +60,7 @@ export function renderTaskForm(){
   </section>
 </main>`
 }
+
+export function setupTaskForm(){
+  return;
+}
