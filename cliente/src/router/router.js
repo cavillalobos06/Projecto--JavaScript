@@ -20,5 +20,21 @@ export function renderRouter(){
 
 
 export function initRouter(){
-    return;
-}
+    document.addEventListener("click", (event) =>{
+        const link = event.target.closest("a");
+        if(!link){
+            return;
+        }
+        const href = link.getAttribute("href");
+        if(!href || !href.startsWith("/")){
+            return;
+        }
+
+        event.preventDefault();
+        window.history.pushState({}, "", href);
+        renderRouter();
+    })
+};
+
+window.addEventListener("popstate", renderRouter)
+renderRouter();
