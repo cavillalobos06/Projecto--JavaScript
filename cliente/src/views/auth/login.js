@@ -1,3 +1,5 @@
+import { loginSession } from "../../services/auth.service";
+
 export function renderLogin(){
     return `
 <main class="grid min-h-screen lg:grid-cols-[1fr_0.95fr]">
@@ -50,10 +52,26 @@ export function renderLogin(){
 
 
 export function setupLogin(){
-  const form = document.querySelector('form');
-  form.addEventListener('submit', async (event) => {
+  const loginForm = document.querySelector("form");
+  const loginButton = loginForm?.querySelector('a[href="/dashboard"]')
+  
+  if(!loginForm || !loginButton){
+    return;
+  }
+
+  loginButton.addEventListener("click", async (event) =>{
     event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-  });
+    event.stopPropagation();
+
+    const email = document.getElementById("email")?.value ?? ""
+    const password = document.getElementById("password")?.value ?? ""
+    try {
+      const user = await loginSession({email, password})
+    } catch (error) {
+      
+    }
+  })
+
+
+
 }
