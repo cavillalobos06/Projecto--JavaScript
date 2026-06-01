@@ -1,5 +1,5 @@
 import { renderRouter } from "../../router/router";
-import { createUser } from "../../services/users.service";
+import { createUser, getUser } from "../../services/users.service";
 import Swal from 'sweetalert2'
 
 export function renderRegister() {
@@ -97,6 +97,18 @@ export function setupRegister() {
       });
       return;
     }
+    const userAlreadyExist = await getUser(email)
+
+    if (userAlreadyExist.length > 0) {
+      Swal.fire({
+        icon: "error",
+        text: "El usuario ya existe",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true
+      });
+      return;
+    }
 
     const newUser = {
       name: name,
@@ -109,6 +121,7 @@ export function setupRegister() {
 
     if (response) {
       Swal.fire({
+        position: "top-end",
         title: "Usuario creado exitosamente",
         icon: "success",
         draggable: true

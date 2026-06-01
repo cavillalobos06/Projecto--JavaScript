@@ -1,5 +1,26 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "a2fe",
+      "name": "Camilo",
+      "lastname": "Villalobos",
+      "email": "villalobosandres989@gmail.com",
+      "password": "1233",
+      "roles": [
+        "USER"
+      ]
+    },
+    {
+      "id": "b58a",
+      "name": "Camcho",
+      "lastname": "Mena",
+      "email": "david123@gmail.com",
+      "password": "1234",
+      "roles": [
+        "ADMIN"
+      ]
+    }
+  ],
   "roles": [
     {
       "name": "USER"

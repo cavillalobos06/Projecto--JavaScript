@@ -1,7 +1,9 @@
+import { renderRouter } from "../../router/router";
 import { loginSession } from "../../services/auth.service";
+import Swal from 'sweetalert2'
 
-export function renderLogin(){
-    return `
+export function renderLogin() {
+  return `
 <main class="grid min-h-screen lg:grid-cols-[1fr_0.95fr]">
   <section class="flex items-center justify-center px-6 py-10">
     <div class="w-full max-w-xl rounded-[2rem] border border-blue-100 bg-white p-8 shadow-xl shadow-blue-100/70">
@@ -51,27 +53,41 @@ export function renderLogin(){
 }
 
 
-export function setupLogin(){
+export function setupLogin() {
   const loginForm = document.querySelector("form");
   const loginButton = loginForm?.querySelector('a[href="/dashboard"]')
-  
-  if(!loginForm || !loginButton){
+
+  if (!loginForm || !loginButton) {
     return;
   }
 
-  loginButton.addEventListener("click", async (event) =>{
+  loginButton.addEventListener("click", async (event) => {
     event.preventDefault();
     event.stopPropagation();
 
     const email = document.getElementById("email")?.value ?? ""
     const password = document.getElementById("password")?.value ?? ""
+
+    if (!email || !password) {
+      Swal.fire({
+        icon: "error",
+        text: "Todos los campos son obligatorios",
+        footer: "Por favor llene los campos"
+      });
+      return;
+    }
+
     try {
-      const user = await loginSession({email, password})
+      const user = await loginSession(email, password)
+      window.history.pushState({}, "", "/dashboard");
+      renderRouter();
+
+      if (!user) {
+        throw new Error("Error")
+      }
+
     } catch (error) {
-      
+      console.error("Error en login:", error.message);
     }
   })
-
-
-
 }

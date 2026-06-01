@@ -1,3 +1,5 @@
+import { getSession, logout } from "../../services/auth.service";
+
 export function renderDashboard(){
     return `
 <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
@@ -10,9 +12,9 @@ export function renderDashboard(){
         href="/tasks">Tareas</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
         href="/profile">Perfil</a>
-      <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+      <a id="admin" class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
         href="/admin">Admin</a>
-      <a class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
+      <a id= "logout" class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
         href="/login">Logout</a>
     </nav>
   </div>
@@ -64,5 +66,19 @@ export function renderDashboard(){
 
 
 export function setupDashboard(){
-  return;
+  const logOut = document.getElementById("logout");
+
+  const currentUser = getSession();
+  const userRol = currentUser.roles[0]
+  
+  if(userRol === "USER"){
+    const admin = document.getElementById("admin")
+    
+    admin.classList.add("hidden")
+  }
+
+
+  logOut.addEventListener("click", () =>{
+    logout();
+  })
 }

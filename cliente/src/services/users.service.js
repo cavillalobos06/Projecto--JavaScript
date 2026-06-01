@@ -13,7 +13,7 @@ export async function createUser(user) {
 }
 
 export async function getUser(email){
-    const response = await fetch(`http://localhost:3000/users/users?email=${email}`);
+    const response = await fetch(`http://localhost:3000/users?email=${email}`);
     if (!response.ok) {
         throw new Error('Failed to fetch user')
     }
