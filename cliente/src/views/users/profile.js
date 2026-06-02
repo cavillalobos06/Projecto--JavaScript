@@ -1,8 +1,13 @@
-export function renderProfile(){
-    return `
+import { renderRouter } from "../../router/router";
+import { getSession, removeSession, saveSession } from "../../services/auth.service";
+import { deleteUser, updateUser } from "../../services/users.service";
+import Swal from 'sweetalert2'
+
+export function renderProfile() {
+  return `
 <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a class="text-xl font-black text-blue-900" href="/home">TaskFlowSPA</a>
+    <a class="text-xl font-black text-blue-900" href="/">TaskFlowSPA</a>
     <nav class="hidden gap-3 md:flex">
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
         href="/dashboard">Dashboard</a>
@@ -36,14 +41,14 @@ export function renderProfile(){
             class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 focus:border-blue-400 focus:outline-none" />
         </div>
         <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700" for="password-new">Nueva contrasena</label>
-          <input id="password-new" type="password" placeholder="Actualiza tu contrasena"
+          <label class="mb-2 block text-sm font-medium text-slate-700" for="password-new">Nueva contraseña</label>
+          <input id="password-new" type="password" placeholder="Actualiza tu contraseña"
             class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:border-blue-400 focus:outline-none" />
         </div>
         <div class="flex flex-col gap-3 pt-2 sm:flex-row">
-          <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
+          <a id= "saveChanges" class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
             href="/profile">Guardar cambios</a>
-          <a class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
+          <a id="delete" class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
             href="/login">Eliminar mi cuenta</a>
         </div>
       </form>
@@ -52,6 +57,82 @@ export function renderProfile(){
 </main>`
 }
 
-export function setupProfile(){
-  return;
+export function setupProfile() {
+
+  const profile = document.getElementById("profile-email");
+  const name = document.getElementById("name");
+  const password = document.getElementById("password-new");
+  const session = getSession()
+
+  profile.value = session.email
+  name.value = `${session.name} ${session.lastname}`
+
+  const changes = document.getElementById("saveChanges");
+  changes.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const nameParts = name.value.trim().split(' ');
+
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ');
+
+    const updatedData = {
+      name: firstName,
+      email: profile.value.trim(),
+    };
+
+    if (!lastName) {
+      updatedData.lastname = session.lastname
+    } else {
+      updatedData.lastname = lastName
+    }
+
+    if (password.value.trim()) {
+      updatedData.password = password.value.trim();
+    }
+
+    try {
+      const updatedUser = await updateUser(session.id, updatedData);
+
+      saveSession({ ...session, ...updatedData });
+      sessionStorage.setItem("profileUpdated", "true");
+      sessionStorage.setItem("blockProfile", "true");
+
+      Swal.fire({
+        icon: "success",
+        title: "Perfil actualizado",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      }).then(() => {
+        window.history.replaceState(null, "", "/dashboard");
+        renderRouter();
+      });
+
+    } catch (error) {
+      Swal.fire({ icon: "error", text: "Error al actualizar el perfil" });
+      console.error(error)
+    }
+  });
+
+  const deleteAccount = document.getElementById("delete");
+  deleteAccount.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const confirm = await Swal.fire({
+      icon: "warning",
+      title: "¿Eliminar cuenta?",
+      text: "Esta acción no se puede deshacer",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    });
+
+    if (confirm.isConfirmed) {
+      await deleteUser(session.id);
+      removeSession();
+      window.history.pushState({}, "", "/login");
+      renderRouter();
+    }
+  })
 }

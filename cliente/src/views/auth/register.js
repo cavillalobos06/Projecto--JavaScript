@@ -97,6 +97,18 @@ export function setupRegister() {
       });
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      Swal.fire({
+        icon: "error",
+        text: "El correo no es válido",
+        footer: "Debe contener @ y un dominio"
+      });
+      return;
+    }
+
     const userAlreadyExist = await getUser(email)
 
     if (userAlreadyExist.length > 0) {

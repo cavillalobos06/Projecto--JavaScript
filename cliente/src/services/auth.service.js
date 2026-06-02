@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 
 const userSession = "Sesion-Actual";
 
-function saveSession(user) {
+export function saveSession(user) {
     localStorage.setItem(userSession, JSON.stringify(user))
 }
 

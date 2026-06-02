@@ -1,21 +1,31 @@
 {
   "users": [
     {
-      "id": "a2fe",
-      "name": "Camilo",
+      "id": "a13d",
+      "name": "Andres",
       "lastname": "Villalobos",
-      "email": "villalobosandres989@gmail.com",
-      "password": "1233",
+      "email": "andresruiz2026@gmail.com",
+      "password": "12345",
       "roles": [
         "USER"
       ]
     },
     {
-      "id": "b58a",
-      "name": "Camcho",
-      "lastname": "Mena",
-      "email": "david123@gmail.com",
+      "id": "915b",
+      "name": "Carlos",
+      "lastname": "Villa",
+      "email": "holamundo@hotmail.com",
       "password": "1234",
+      "roles": [
+        "USER"
+      ]
+    },
+    {
+      "id": "8844",
+      "name": "David",
+      "lastname": "Villa",
+      "email": "canillocarlos@gmail.com",
+      "password": "1232",
       "roles": [
         "ADMIN"
       ]
@@ -28,5 +38,6 @@
     {
       "name": "ADMIN"
     }
-  ]
+  ],
+  "tasks": []
 }

@@ -1,4 +1,4 @@
-import { getSession, removeSession } from "../services/auth.service";
+import { getSession } from "../services/auth.service";
 import { routes, notFoundView } from "./routes";
 
 
@@ -9,8 +9,15 @@ export function renderRouter() {
 
     if (session) {
         if (path === "/login" || path === "/register" || path === "/") {
-            window.history.pushState({}, "", "/dashboard");
+            window.history.replaceState({}, "", "/dashboard");
         }
+    }
+    
+    if (path === "/profile" && sessionStorage.getItem("blockProfile")) {
+        window.history.replaceState(null, "", "/dashboard");
+        app.innerHTML = routes["/dashboard"].render();
+        if (routes["/dashboard"].setup) routes["/dashboard"].setup();
+        return;
     }
 
     if (!session) {
@@ -31,6 +38,10 @@ export function renderRouter() {
     if (route.setup) {
         route.setup();
     }
+
+    if (path === "/profile" && sessionStorage.getItem("blockProfile")) {
+        window.history.replaceState(null, "", "/dashboard");
+    }
 }
 
 
@@ -40,9 +51,14 @@ export function initRouter() {
         if (!link) {
             return;
         }
+
         const href = link.getAttribute("href");
         if (!href || !href.startsWith("/")) {
             return;
+        }
+
+        if (href === "/profile") {
+            sessionStorage.removeItem("blockProfile");
         }
 
         event.preventDefault();

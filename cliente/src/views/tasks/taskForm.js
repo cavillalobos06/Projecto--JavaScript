@@ -1,8 +1,13 @@
-export function renderTaskForm(){
-    return `
+import { getSession } from "../../services/auth.service";
+import { renderRouter } from "../../router/router";
+import { createTask, updateTask, getTasks } from "../../services/task.service";
+import Swal from 'sweetalert2';
+
+export function renderTaskForm() {
+  return `
 <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-    <a class="text-xl font-black text-blue-900" href="/src/views/home.html">TaskFlowSPA</a>
+    <a class="text-xl font-black text-blue-900" href="/">TaskFlowSPA</a>
     <nav class="hidden gap-3 md:flex">
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
         href="/dashboard">Dashboard</a>
@@ -51,7 +56,7 @@ export function renderTaskForm(){
       </div>
 
       <div class="flex flex-col gap-3 pt-2 sm:flex-row">
-        <a class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
+        <a id="save-task" class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
           href="/tasks">Guardar tarea</a>
         <a class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
           href="/tasks">Cancelar</a>
@@ -61,6 +66,85 @@ export function renderTaskForm(){
 </main>`
 }
 
-export function setupTaskForm(){
-  return;
+export async function setupTaskForm() {
+  const session = getSession();
+  const editTaskId = sessionStorage.getItem("editTaskId");
+
+  const titleInput = document.getElementById("title");
+  const descriptionInput = document.getElementById("description");
+  const statusInput = document.getElementById("status");
+  const dateInput = document.getElementById("date");
+  const saveBtn = document.getElementById("save-task");
+
+  
+  if (editTaskId) {
+    const tasks = await getTasks(session.id);
+    const task = tasks.find(t => t.id === editTaskId);
+
+    if (task) {
+      titleInput.value = task.title;
+      descriptionInput.value = task.description;
+      statusInput.value = task.status;
+      dateInput.value = task.date || "";
+    }
+  }
+
+  saveBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const title = titleInput.value.trim();
+    const description = descriptionInput.value.trim();
+    const status = statusInput.value;
+    const date = dateInput.value;
+
+    if (!title) {
+      Swal.fire({
+        icon: "error",
+        text: "El título es obligatorio"
+      });
+      return;
+    }
+
+    const taskData = {
+      title,
+      description,
+      status,
+      date,
+      userId: session.id
+    };
+
+    try {
+      if (editTaskId) {
+        
+        await updateTask(editTaskId, taskData);
+        sessionStorage.removeItem("editTaskId");
+        Swal.fire({
+          icon: "success",
+          title: "Tarea actualizada",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          window.history.replaceState(null, "", "/tasks");
+          renderRouter();
+        });
+      } else {
+        
+        await createTask(taskData);
+        Swal.fire({
+          icon: "success",
+          title: "Tarea creada",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          window.history.replaceState(null, "", "/tasks");
+          renderRouter();
+        });
+      }
+    } catch (error) {
+      Swal.fire({ icon: "error", text: "Error al guardar la tarea" });
+      console.error(error);
+    }
+  });
 }
