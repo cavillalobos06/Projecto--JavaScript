@@ -1,5 +1,8 @@
-export function renderAdmin(){
-    return `
+import { logout } from "../../services/auth.service";
+import { getUsers } from "../../services/users.service";
+
+export function renderAdmin() {
+  return `
 <header class="border-b border-blue-100 bg-white/90 backdrop-blur">
       <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <a class="text-xl font-black text-blue-900" href="/">TaskFlowSPA</a>
@@ -8,6 +11,8 @@ export function renderAdmin(){
           <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/tasks">Tareas</a>
           <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/profile">Perfil</a>
           <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/admin">Admin</a>
+          <a id= "logout" class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
+            href="/login">Logout</a>
         </nav>
       </div>
 </header>
@@ -34,7 +39,7 @@ export function renderAdmin(){
             <h2 class="text-xl font-bold text-slate-900">Usuarios</h2>
             <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-blue-700">Mockup</span>
           </div>
-          <div class="mt-5 space-y-4">
+          <div id= "contenedor" class="mt-5 space-y-4">
             <div class="rounded-2xl bg-blue-50 p-4">
               <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div>
@@ -65,6 +70,30 @@ export function renderAdmin(){
 </main>`
 }
 
-export function setupAdmin(){
-  return;
+export async function setupAdmin() {
+  const content = document.getElementById("contenedor");
+
+  const users = await getUsers();
+  content.innerHTML = ""
+
+  users.forEach(user => {
+    content.innerHTML += `<div class="rounded-2xl bg-blue-50 p-4">
+              <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p class="font-bold text-slate-900">${user.name} ${user.lastname}</p>
+                  <p class="text-sm text-slate-500">${user.email}</p>
+                </div>
+                <div class="flex gap-2">
+                  <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">USER</span>
+                  <a class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white" href="/admin">Editar rol</a>
+                </div>
+              </div>
+            </div>`
+  });
+
+  const logOut = document.getElementById("logout");
+  logOut.addEventListener("click", () => {
+    logout();
+  })
+
 }

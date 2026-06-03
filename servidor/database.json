@@ -21,11 +21,21 @@
       ]
     },
     {
-      "id": "8844",
-      "name": "David",
+      "id": "85ed",
+      "name": "Andres",
+      "lastname": "Ruiz",
+      "email": "andresrz24@gmail.com",
+      "password": "hola123",
+      "roles": [
+        "USER"
+      ]
+    },
+    {
+      "id": "599e",
+      "name": "Camilo",
       "lastname": "Villa",
-      "email": "canillocarlos@gmail.com",
-      "password": "1232",
+      "email": "villalobosandres989@gmail.com",
+      "password": "12345",
       "roles": [
         "ADMIN"
       ]
@@ -33,11 +43,22 @@
   ],
   "roles": [
     {
-      "name": "USER"
+      "name": "USER",
+      "id": "7e03"
     },
     {
-      "name": "ADMIN"
+      "name": "ADMIN",
+      "id": "5d74"
     }
   ],
-  "tasks": []
+  "tasks": [
+    {
+      "id": "66ff",
+      "title": "Nueva Tarea",
+      "description": "Proyecto Final",
+      "status": "Pendiente",
+      "date": "2026-06-28",
+      "userId": "599e"
+    }
+  ]
 }

@@ -79,6 +79,15 @@ export function setupLogin() {
 
     try {
       const user = await loginSession(email, password)
+      Swal.fire({
+        position: "top-end",
+        timer: 1700,
+        timerProgressBar: true,
+        toast: true,
+        title: "Inicio de sesión exitoso",
+        icon: "success",
+        showConfirmButton: false
+      });
       window.history.pushState({}, "", "/dashboard");
       renderRouter();
 

@@ -1,4 +1,4 @@
-import { getSession } from "../../services/auth.service";
+import { getSession, logout } from "../../services/auth.service";
 import { renderRouter } from "../../router/router";
 import { createTask, updateTask, getTasks } from "../../services/task.service";
 import Swal from 'sweetalert2';
@@ -15,6 +15,10 @@ export function renderTaskForm() {
         href="/tasks">Tareas</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
         href="/profile">Perfil</a>
+      <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+        href="/admin">Admin</a>
+      <a id= "logout" class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
+        href="/login">Logout</a>
     </nav>
   </div>
 </header>
@@ -58,7 +62,7 @@ export function renderTaskForm() {
       <div class="flex flex-col gap-3 pt-2 sm:flex-row">
         <a id="save-task" class="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500"
           href="/tasks">Guardar tarea</a>
-        <a class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
+        <a id="cancel" class="inline-flex items-center justify-center rounded-2xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"
           href="/tasks">Cancelar</a>
       </div>
     </form>
@@ -67,6 +71,13 @@ export function renderTaskForm() {
 }
 
 export async function setupTaskForm() {
+
+  const logOut = document.getElementById("logout");
+
+  logOut.addEventListener("click", () => {
+    logout();
+  })
+
   const session = getSession();
   const editTaskId = sessionStorage.getItem("editTaskId");
 
@@ -76,7 +87,7 @@ export async function setupTaskForm() {
   const dateInput = document.getElementById("date");
   const saveBtn = document.getElementById("save-task");
 
-  
+
   if (editTaskId) {
     const tasks = await getTasks(session.id);
     const task = tasks.find(t => t.id === editTaskId);
@@ -86,6 +97,9 @@ export async function setupTaskForm() {
       descriptionInput.value = task.description;
       statusInput.value = task.status;
       dateInput.value = task.date || "";
+
+    }else{
+      sessionStorage.removeItem("editTaskId");
     }
   }
 
@@ -115,7 +129,7 @@ export async function setupTaskForm() {
 
     try {
       if (editTaskId) {
-        
+
         await updateTask(editTaskId, taskData);
         sessionStorage.removeItem("editTaskId");
         Swal.fire({
@@ -129,7 +143,7 @@ export async function setupTaskForm() {
           renderRouter();
         });
       } else {
-        
+
         await createTask(taskData);
         Swal.fire({
           icon: "success",
@@ -144,7 +158,24 @@ export async function setupTaskForm() {
       }
     } catch (error) {
       Swal.fire({ icon: "error", text: "Error al guardar la tarea" });
-      console.error(error);
     }
   });
+
+  const cancel = document.getElementById("cancel");
+  cancel.addEventListener("click", async (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const action = Swal.fire({
+      icon: "info",
+      title: "¿Desea Cancelar?",
+      showCancelButton: true,
+      confirmButtonText: "Sí",
+      cancelButtonText: "No"
+    });
+    if ((await action).isConfirmed) { 
+      sessionStorage.removeItem("editTaskId");
+      window.history.pushState({}, "", "/tasks");
+      renderRouter();
+    }
+  })
 }

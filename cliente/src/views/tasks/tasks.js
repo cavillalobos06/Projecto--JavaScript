@@ -1,10 +1,7 @@
 import { renderRouter } from "../../router/router";
-import { getSession } from "../../services/auth.service";
+import { getSession, logout } from "../../services/auth.service";
 import { getTasks, deleteTask } from "../../services/task.service";
 import Swal from 'sweetalert2';
-
-
-
 
 export function renderTasks() {
   return `
@@ -14,8 +11,10 @@ export function renderTasks() {
     <nav class="hidden gap-3 md:flex">
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/dashboard">Dashboard</a>
       <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/tasks">Tareas</a>
-      <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/admin">Admin</a>
       <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/profile">Perfil</a>
+      <a id= "admin" class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/admin">Admin</a>
+      <a id= "logout" class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
+        href="/login">Logout</a>
     </nav>
   </div>
 </header>
@@ -38,7 +37,21 @@ export function renderTasks() {
 
 export async function setupTasks() {
 
+  const logOut = document.getElementById("logout");
+  logOut.addEventListener("click", () => {
+    logout();
+  })
+
   const session = getSession();
+  const userRol = session.roles[0]
+
+  if (userRol === "USER") {
+    const admin = document.getElementById("admin")
+
+    admin.classList.add("hidden")
+  }
+
+
   const tasksList = document.getElementById("tasks-list");
 
   const tasks = await getTasks(session.id);
@@ -57,8 +70,8 @@ export async function setupTasks() {
                     <p class="mt-3 max-w-2xl text-slate-600">${task.description}</p>
                 </div>
                 <div class="flex gap-3">
-                    <a data-id="${task.id}" class="edit-btn rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50">Editar</a>
-                    <button data-id="${task.id}" class="delete-btn rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50">Eliminar</button>
+                    <a data-id="${task.id}" class="edit-btn rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 cursor-pointer">Editar</a>
+                    <button data-id="${task.id}" class="delete-btn rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 cursor-pointer">Eliminar</button>
                 </div>
             </div>
         </article>

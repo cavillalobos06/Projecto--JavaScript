@@ -102,24 +102,7 @@ export async function setupDashboard() {
 
   document.getElementById("count-pending").textContent =
     tasks.filter(t => t.status === "Pendiente").length;
-
-  const recentTasks = document.getElementById("recent-tasks");
-
-  if (tasks.length === 0) {
-    recentTasks.innerHTML = `<p class="text-slate-400">No tienes tareas aún.</p>`;
-  } else {
-    recentTasks.innerHTML = tasks.slice(0, 3).map(task => `
-        <div class="flex items-center justify-between rounded-2xl bg-blue-50 px-5 py-4">
-            <div>
-                <p class="text-sm font-bold text-slate-900">${task.title}</p>
-                <p class="text-xs text-slate-500">${task.description}</p>
-            </div>
-            <span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-                ${task.status}
-            </span>
-        </div>
-    `).join("");
-  }
+    
 
   if (sessionStorage.getItem("profileUpdated")) {
     sessionStorage.removeItem("profileUpdated");

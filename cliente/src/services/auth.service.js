@@ -1,4 +1,3 @@
-import { renderRouter } from "../router/router";
 import { getUser } from "./users.service";
 import Swal from 'sweetalert2'
 
@@ -60,6 +59,5 @@ export async function loginSession(email, password) {
 
 export function logout() {
     removeSession();
-    window.history.pushState({}, "", "/login");
-    renderRouter();
+    window.location.href = "/login";
 }

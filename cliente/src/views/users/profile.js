@@ -1,5 +1,5 @@
 import { renderRouter } from "../../router/router";
-import { getSession, removeSession, saveSession } from "../../services/auth.service";
+import { getSession, logout, removeSession, saveSession } from "../../services/auth.service";
 import { deleteUser, updateUser } from "../../services/users.service";
 import Swal from 'sweetalert2'
 
@@ -15,6 +15,10 @@ export function renderProfile() {
         href="/tasks">Tareas</a>
       <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
         href="/profile">Perfil</a>
+      <a class="rounded-full  px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+        href="/admin">Admin</a>
+      <a id= "logout" class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
+        href="/login">Logout</a>
     </nav>
   </div>
 </header>
@@ -118,8 +122,9 @@ export function setupProfile() {
   const deleteAccount = document.getElementById("delete");
   deleteAccount.addEventListener("click", async (event) => {
     event.preventDefault();
+    event.stopPropagation();
 
-    const confirm = await Swal.fire({
+    const confirm = Swal.fire({
       icon: "warning",
       title: "¿Eliminar cuenta?",
       text: "Esta acción no se puede deshacer",
@@ -128,11 +133,16 @@ export function setupProfile() {
       cancelButtonText: "Cancelar"
     });
 
-    if (confirm.isConfirmed) {
+    if ((await confirm).isConfirmed) {
       await deleteUser(session.id);
       removeSession();
       window.history.pushState({}, "", "/login");
       renderRouter();
     }
+  })
+
+  const logOut = document.getElementById("logout");
+  logOut.addEventListener("click", () => {
+    logout();
   })
 }

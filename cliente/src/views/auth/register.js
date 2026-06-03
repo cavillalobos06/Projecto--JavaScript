@@ -134,8 +134,12 @@ export function setupRegister() {
     if (response) {
       Swal.fire({
         position: "top-end",
+        timer: 1700,
+        timerProgressBar: true,
+        toast: true,
         title: "Usuario creado exitosamente",
         icon: "success",
+        showConfirmButton: false,
         draggable: true
       });
       window.history.pushState({}, "", "/login")
