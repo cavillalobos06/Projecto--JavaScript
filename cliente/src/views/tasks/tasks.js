@@ -60,22 +60,22 @@ export async function setupTasks() {
     tasksList.innerHTML = `<p class="text-slate-400">No tienes tareas aún.</p>`;
     return;
   }
-
-  tasksList.innerHTML = tasks.map(task => `
-        <article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
-            <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                <div>
-                    <p class="text-xs font-bold uppercase tracking-[0.25em] text-blue-600">${task.status}</p>
-                    <h2 class="mt-2 text-2xl font-bold text-slate-900">${task.title}</h2>
-                    <p class="mt-3 max-w-2xl text-slate-600">${task.description}</p>
-                </div>
-                <div class="flex gap-3">
-                    <a data-id="${task.id}" class="edit-btn rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 cursor-pointer">Editar</a>
-                    <button data-id="${task.id}" class="delete-btn rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 cursor-pointer">Eliminar</button>
-                </div>
-            </div>
-        </article>
-    `).join("");
+  tasksList.innerHTML = "";
+  tasks.forEach(task => {
+    tasksList.innerHTML += `<article class="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50">
+      <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.25em] text-blue-600">${task.status}</p>
+          <h2 class="mt-2 text-2xl font-bold text-slate-900">${task.title}</h2>
+          <p class="mt-3 max-w-2xl text-slate-600">${task.description}</p>
+        </div>
+        <div class="flex gap-3">
+          <a data-id="${task.id}" class="edit-btn rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 cursor-pointer">Editar</a>
+          <button data-id="${task.id}" class="delete-btn rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 cursor-pointer">Eliminar</button>
+        </div>
+      </div>
+    </article>`
+  });
 
   tasksList.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", async () => {

@@ -1,5 +1,7 @@
-import { logout } from "../../services/auth.service";
-import { getUsers } from "../../services/users.service";
+import { renderRouter } from "../../router/router";
+import { getSession, logout } from "../../services/auth.service";
+import { getUsers, updateUser } from "../../services/users.service";
+import Swal from 'sweetalert2';
 
 export function renderAdmin() {
   return `
@@ -10,7 +12,7 @@ export function renderAdmin() {
           <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/dashboard">Dashboard</a>
           <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/tasks">Tareas</a>
           <a class="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700" href="/profile">Perfil</a>
-          <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/admin">Admin</a>
+          <a  id="admin" class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white" href="/admin">Admin</a>
           <a id= "logout" class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
             href="/login">Logout</a>
         </nav>
@@ -71,7 +73,18 @@ export function renderAdmin() {
 }
 
 export async function setupAdmin() {
+
+  const session = getSession();
+  const userRol = session.roles[0]
+
+  if (userRol === "USER") {
+    const admin = document.getElementById("admin")
+
+    admin.classList.add("hidden")
+  }
+
   const content = document.getElementById("contenedor");
+
 
   const users = await getUsers();
   content.innerHTML = ""
@@ -84,16 +97,42 @@ export async function setupAdmin() {
                   <p class="text-sm text-slate-500">${user.email}</p>
                 </div>
                 <div class="flex gap-2">
-                  <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">USER</span>
-                  <a class="rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white" href="/admin">Editar rol</a>
+                  <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-blue-700">${user.roles[0]}</span>
+                  <button data-id = "${user.id}" data-rol = "${user.roles[0]}" class=" edit-rol-btn rounded-full border border-blue-200 px-3 py-1 text-xs font-semibold text-blue-700 hover:bg-white" href="/admin">Editar rol</button>
                 </div>
               </div>
             </div>`
+  });
+
+  content.querySelectorAll(".edit-rol-btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const currentRol = btn.dataset.rol;
+      const newRol = currentRol === "USER" ? "ADMIN" : "USER";
+
+      const confirm = await Swal.fire({
+        icon: "question",
+        title: `¿Cambiar rol a ${newRol}?`,
+        showCancelButton: true,
+        confirmButtonText: "Sí, cambiar",
+        cancelButtonText: "Cancelar"
+      });
+
+      if (confirm.isConfirmed) {
+        await updateUser(btn.dataset.id, { roles: [newRol] });
+        Swal.fire({
+          icon: "success",
+          title: "Rol actualizado",
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => renderRouter());
+      }
+
+    });
   });
 
   const logOut = document.getElementById("logout");
   logOut.addEventListener("click", () => {
     logout();
   })
-
 }

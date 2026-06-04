@@ -17,7 +17,7 @@
       "email": "holamundo@hotmail.com",
       "password": "1234",
       "roles": [
-        "USER"
+        "ADMIN"
       ]
     },
     {
@@ -37,7 +37,7 @@
       "email": "villalobosandres989@gmail.com",
       "password": "12345",
       "roles": [
-        "ADMIN"
+        "USER"
       ]
     }
   ],
@@ -47,7 +47,7 @@
       "id": "7e03"
     },
     {
-      "name": "ADMIN",
+      "name": "USER",
       "id": "5d74"
     }
   ],
@@ -60,5 +60,6 @@
       "date": "2026-06-28",
       "userId": "599e"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
