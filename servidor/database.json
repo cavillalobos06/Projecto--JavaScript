@@ -59,6 +59,14 @@
       "status": "Pendiente",
       "date": "2026-06-28",
       "userId": "599e"
+    },
+    {
+      "title": "Proyecto Final",
+      "description": "",
+      "status": "En progreso",
+      "date": "2026-06-26",
+      "userId": "85ed",
+      "id": "ozLYnwG7YZc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

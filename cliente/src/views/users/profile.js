@@ -15,7 +15,7 @@ export function renderProfile() {
         href="/tasks">Tareas</a>
       <a class="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
         href="/profile">Perfil</a>
-      <a class="rounded-full  px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+      <a id="admin" class="rounded-full  px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-700"
         href="/admin">Admin</a>
       <a id= "logout" class="rounded-full px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50"
         href="/login">Logout</a>
@@ -67,6 +67,12 @@ export function setupProfile() {
   const name = document.getElementById("name");
   const password = document.getElementById("password-new");
   const session = getSession()
+
+  if (session.roles[0] === "USER") {
+    const adMin = document.getElementById("admin")
+
+      adMin.classList.add("hidden")
+  }
 
   profile.value = session.email
   name.value = `${session.name} ${session.lastname}`

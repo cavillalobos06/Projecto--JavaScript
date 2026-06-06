@@ -31,3 +31,9 @@ export async function deleteTask(id) {
     if (!response.ok) throw new Error("Error al eliminar tarea");
     return await response.json();
 }
+
+export async function getAllTasks() {
+    const response = await fetch(`${BASE_URL}`);
+    if (!response.ok) throw new Error("Error al obtener tareas");
+    return await response.json();
+}

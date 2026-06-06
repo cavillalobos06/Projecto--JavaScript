@@ -52,7 +52,7 @@ export function renderDashboard() {
         <a class="text-sm font-semibold text-blue-700 hover:text-blue-600" href="/tasks">Ver tareas</a>
       </div>
       <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        <a class="rounded-3xl bg-blue-50 p-5 hover:bg-blue-100" href="/task-form">
+        <a id="createBtn" class="rounded-3xl bg-blue-50 p-5 hover:bg-blue-100" href="/task-form">
           <p class="text-sm font-semibold text-blue-600">Crear</p>
           <h3 class="mt-2 text-lg font-bold text-slate-900">Nueva tarea</h3>
         </a>
@@ -68,6 +68,13 @@ export function renderDashboard() {
 
 
 export async function setupDashboard() {
+
+  const createTask = document.getElementById("createBtn")
+
+  createTask.addEventListener("click", () => {
+    sessionStorage.removeItem("editTaskId")
+  })
+
 
   const session = getSession();
   const welcome = document.getElementById("welcome");
@@ -102,7 +109,7 @@ export async function setupDashboard() {
 
   document.getElementById("count-pending").textContent =
     tasks.filter(t => t.status === "Pendiente").length;
-    
+
 
   if (sessionStorage.getItem("profileUpdated")) {
     sessionStorage.removeItem("profileUpdated");
